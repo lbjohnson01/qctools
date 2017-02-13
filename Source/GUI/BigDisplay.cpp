@@ -432,6 +432,39 @@ const filter Filters[]=
         },
     },
     {
+        "Bit Plane (10 bit columns)",
+        0,
+        {
+            { Args_Type_Toggle,   0,   0,   0,   0, "Field" },
+            { Args_Type_Yuv,      0,   0,   0,   0, "Plane"},
+            { Args_Type_None,     0,   0,   0,   0, },
+            { Args_Type_None,     0,   0,   0,   0, },
+            { Args_Type_None,     0,   0,   0,   0, },
+            { Args_Type_None,     0,   0,   0,   0, },
+            { Args_Type_None,     0,   0,   0,   0, },
+        },
+        {
+            "extractplanes=${2},format=yuv444p10le,\
+            split=10[b0][b1][b2][b3][b4][b5][b6][b7][b8][b9];\
+            [b0]crop=iw/10:ih:(iw/10)*0:0,lutyuv=y=bitand(val\\,pow(2\\,10-1))*pow(2\\,1):u=512:v=512[b0c];\
+            [b1]crop=iw/10:ih:(iw/10)*1:0,lutyuv=y=bitand(val\\,pow(2\\,10-2))*pow(2\\,2):u=512:v=512[b1c];\
+            [b2]crop=iw/10:ih:(iw/10)*2:0,lutyuv=y=bitand(val\\,pow(2\\,10-3))*pow(2\\,3):u=512:v=512[b2c];\
+            [b3]crop=iw/10:ih:(iw/10)*3:0,lutyuv=y=bitand(val\\,pow(2\\,10-4))*pow(2\\,4):u=512:v=512[b3c];\
+            [b4]crop=iw/10:ih:(iw/10)*4:0,lutyuv=y=bitand(val\\,pow(2\\,10-5))*pow(2\\,5):u=512:v=512[b4c];\
+            [b5]crop=iw/10:ih:(iw/10)*5:0,lutyuv=y=bitand(val\\,pow(2\\,10-6))*pow(2\\,6):u=512:v=512[b5c];\
+            [b6]crop=iw/10:ih:(iw/10)*6:0,lutyuv=y=bitand(val\\,pow(2\\,10-7))*pow(2\\,7):u=512:v=512[b6c];\
+            [b7]crop=iw/10:ih:(iw/10)*7:0,lutyuv=y=bitand(val\\,pow(2\\,10-8))*pow(2\\,8):u=512:v=512[b7c];\
+            [b8]crop=iw/10:ih:(iw/10)*8:0,lutyuv=y=bitand(val\\,pow(2\\,10-9))*pow(2\\,9):u=512:v=512[b8c];\
+            [b9]crop=iw/10:ih:(iw/10)*9:0,lutyuv=y=bitand(val\\,pow(2\\,10-10))*pow(2\\,10):u=512:v=512[b9c];\
+            [b0c][b1c][b2c][b3c][b4c][b5c][b6c][b7c][b8c][b9c]hstack=10,format=yuv444p,drawgrid=w=iw/10:h=ih:t=2:c=green@0.5",
+            "il=l=d:c=d,format=yuv420p10le|yuv422p10le|yuv444p10le|yuv440p10le,\
+            lutyuv=\
+                y=if(eq(${2}\\,-1)\\,512\\,if(eq(${2}\\,0)\\,val\\,bitand(val\\,pow(2\\,10-${2}))*pow(2\\,${2}))):\
+                u=if(eq(${3}\\,-1)\\,512\\,if(eq(${3}\\,0)\\,val\\,bitand(val\\,pow(2\\,10-${3}))*pow(2\\,${3}))):\
+                v=if(eq(${4}\\,-1)\\,512\\,if(eq(${4}\\,0)\\,val\\,bitand(val\\,pow(2\\,10-${4}))*pow(2\\,${4}))),format=yuv444p",
+        },
+    },
+    {
         "Bit Plane Noise",
         0,
         {
@@ -1760,7 +1793,7 @@ string BigDisplay::FiltersList_currentOptionChanged(size_t Pos, size_t Picture_C
                                     {
                                         if (Options[Pos].Radios[OptionPos][OptionPos2] && Options[Pos].Radios[OptionPos][OptionPos2]->isChecked())
                                         {
-                                            if (string(Filters[Picture_Current].Name)=="Extract Planes Equalized" || string(Filters[Picture_Current].Name)=="Bit Plane Noise" || string(Filters[Picture_Current].Name)=="Value Highlight" || string(Filters[Picture_Current].Name)=="Field Difference" || string(Filters[Picture_Current].Name)=="Temporal Difference")
+                                            if (string(Filters[Picture_Current].Name)=="Extract Planes Equalized" || string(Filters[Picture_Current].Name)=="Bit Plane Noise" || string(Filters[Picture_Current].Name)=="Value Highlight" || string(Filters[Picture_Current].Name)=="Field Difference" || string(Filters[Picture_Current].Name)=="Temporal Difference" || string(Filters[Picture_Current].Name)=="Bit Plane (10 bit columns)")
                                             {
                                                 switch (OptionPos2)
                                                 {
