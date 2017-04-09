@@ -112,15 +112,18 @@ Allows for playback in various color spaces, including BT.601, BT.709, SMPTE240M
 ![Color Matrix](media/playbackfilter_color_matrix.jpg)
 
 ## [Datascope](#datascope)
-
+This filter displays an error as hexidecimals, corresponding to YUV levels. Y is plotted on one line and U/V on the other. Navigate the display by setting an x and y coordinate.
 ![Datascope](media/playbackfilter_datascope.jpg)
+
+Enabling "Show" disables the Datascope to reference and display the coordinate location.
+![Datascope w/ Show option](media/playbackfilter_datascope_show.jpg)
 
 ## [Extract Planes Equalized](#extract-planes-equalized)
 
 This filter extracts a specified video plane (such as Y, U, or V) which represents the luma or part of the chroma data from the video so that it may be reviewed on its own. The filter also may apply histogram equalization to redistributes the pixel intensities to equalize their distribution across the intensity range (this feature can help exaggerate or clarify the details of the plane image). This filter is useful for detecting lossy compression in video signals or establishing provenance.
 
 This image shows the Normal display on the left and Extract Planes on the right. The Extract Planes filters reveals the macroblock pattern of lossy MPEG2 compression in the square patterns throughout the image.
-![Extract Planes Equalized](media/extractplanes.jpg)
+![Extract Planes Equalized](media/playbackfilter_extract_planes.jpg)
 
 ## [Extract Planes UV Equalized](#extract-planes-uv-equalized)
 
@@ -131,7 +134,7 @@ This filter is similar to the **Extract Planes Equalized** filter but shows the 
 
 This presentation visualizes the difference between video field 1 and field 2\. A middle gray image would mean that field 1 and field 2 were identical, whereas deviation to white or black indicates a difference.
 
-![Field Difference](media/fielddiff.jpg)
+![Field Difference](media/playbackfilter_field_difference.jpg)
 
 ## [Frame Tiles](#frame-tiles)
 
@@ -149,9 +152,9 @@ The histogram shows the frequency of occurrence of values per channel. Typically
 
 ## [Line Select](#line-select)
 
-Allows a user to select one line of video signal to display as a waveform. Includes **'Vertical'** and **'Background'** modes. When **'Vertical'** is enable the user may select to plot a waveform of a single column rather than the default plot of a single row. The **'Background'** option shows the frame image under the waveform with the highlighted row or column highlighted in yellow.
+Allows a user to select one line of video signal to display as a waveform. Includes **'Vertical'** and **'Background'** modes. When **'Vertical'** is enabled the user may select to plot a waveform of a single column rather than the default plot of a single row. The **'Background'** option shows the frame image under the waveform with the highlighted row or column highlighted in yellow.
 
-![Line Select](media/lineselect.jpg)
+![Line Select](media/playbackfilter_line_select.jpg)
 
 ## [No Display](#no-display)
 
@@ -164,7 +167,7 @@ This view simply shows the video as QCTools interprets it, no special effects or
 
 This image shows two Normal displays side-by-side where the right image has **'Field'** enabled. By viewed the fields separated on the right, it is easily clear that while field 1 was read correctly from the tape, there was no color data was read for field 2\. This issue was due to a head clog and fixed by cleaning the video player and re-digitizing the content.
 
-![Normal / Field Split](media/fieldsplit.jpg)
+![Normal / Field Split](media/playbackfilter_normal_fieldsplit.jpg)
 
 ## [Pixel Offset Subtraction](#pixel-offset-subtraction)
 
@@ -204,8 +207,8 @@ This filter selects a video plane and highlights values with a specified range o
 
 ## [Vectorscope](#vectorscope)
 
-A vectorscope display. This display plots chroma values (U/V color placement) in two dimensional graph (which is called a vectorscope). It can be used to read of the hue and saturation of the current frame. The whiter a pixel in the vectorscope, the more pixels of the input frame correspond to that pixel (that is the more pixels have this chroma value). The V component is displayed on the vertical (Y) axis, with the bottom edge being V = 0 and the top being V = 255\. The U component is displayed on the horizontal (Y) axis, with the left representing U = 0 and the right representing U = 255.
-Six blocks are highlighted to depict standardized color points for red (90, 16), green (54, 222), blue (240, 146), cyan (166, 240), magenta (202, 44), and yellow (16, 110). All valid chroma values fall within a circlular shape from the center to the outer edge of the plot.You may also select **'Field'** option which will depict fields 1 and 2 separately (field 1 on top, field 2 on bottom).
+A vectorscope display. This display plots chroma values (U/V color placement) in two dimensional graph (which is called a vectorscope). It can be used to read the hue and saturation of the current frame. The whiter a pixel in the vectorscope, the more pixels of the input frame correspond to that pixel (that is the more pixels have this chroma value). The V component is displayed on the vertical (Y) axis, with the bottom edge being V = 0 and the top being V = 255\. The U component is displayed on the horizontal (Y) axis, with the left representing U = 0 and the right representing U = 255.
+Six blocks are highlighted to depict standardized color points for red (90, 16), green (54, 222), blue (240, 146), cyan (166, 240), magenta (202, 44), and yellow (16, 110). All valid chroma values fall within a circlular shape from the center to the outer edge of the plot. You may also select **'Field'** option which will depict fields 1 and 2 separately (field 1 on top, field 2 on bottom).
 ![Vectorscope Split Screen](media/playback_layout_two_windows.jpg)
 
 The vectorscope player provides the following options:
@@ -213,7 +216,6 @@ The vectorscope player provides the following options:
 * Field: If the checkbox is enabled the player will show two waveforms side-by-side that depict field 1 and field 2 separately.
 * Intensity: Set intensity. Smaller values are useful to find out how many values of the same luminance are distributed across input rows/columns. Default value is 0.1\. Allowed range is [0, 1].
 * Mode: The vectorscope filter can be adjusted to different displays. The default is 'color3'. See [FFmpeg's vectorscope documentation](https://ffmpeg.org/ffmpeg-filters.html#vectorscope) for information on each option.
-* Peak: If enabled, the vectorscope will outline the extent of the plotted values to show an envelope around the plotted values. Peak may be adjusted to outline the extent frame-per-frame or over time.
 
 ![Vectorscope](media/vectorscope_illegal.jpg)
 
@@ -255,6 +257,6 @@ This filter plots the Waveform and Vectorscope on top of each other so that both
 
 ## [Zoom](#zoom)
 
-Allows a user to zoom to a particular portion of the image using X and Y coordinates. Includes "Strength" and "Intensity" modes.
+Allows a user to zoom to a particular portion of the image by setting an x and y coordinate. Includes "Strength" and "Intensity" modes.
 
 ![Zoom](media/playbackfilter_zoom.jpg)
